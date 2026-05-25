@@ -49,6 +49,6 @@ jobs:
           kubectl rollout status deployment/backend --timeout=120s
       - name: Test HTTP
         run: |
-          kubectl port-forward service/backend-service 8080:8080 &
+          kubectl port-forward service/backend 8080:8080 &
           sleep 5
           curl --fail http://localhost:8080/health
