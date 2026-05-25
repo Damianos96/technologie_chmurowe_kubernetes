@@ -15,12 +15,14 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Przygotuj nazwe repozytorium (lowercase)
+        run: echo "REPO_LC=${GITHUB_REPOSITORY,,}" >> $GITHUB_ENV
       - name: Zbuduj i opublikuj obraz
         uses: docker/build-push-action@v5
         with:
           context: ./app/backend
           push: true
-          tags: ghcr.io/${{ github.repository }}/backend:${{ github.sha }}
+          tags: ghcr.io/${{ env.REPO_LC }}/backend:${{ github.sha }}
       - name: Uruchom klaster kind
         uses: helm/kind-action@v1
         with:
