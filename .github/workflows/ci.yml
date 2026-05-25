@@ -32,16 +32,17 @@ jobs:
           cluster_name: test-cluster
       - name: Załaduj obraz do kind
         run: |
-          docker pull ghcr.io/${{ github.repository }}/backend:${{ github.sha }}
+          docker pull ghcr.io/${{ env.REPO_LC }}/backend:${{ github.sha }}
           kind load docker-image \
-            ghcr.io/${{ github.repository }}/backend:${{ github.sha }} \
+            ghcr.io/${{ env.REPO_LC }}/backend:${{ github.sha }} \
             --name test-cluster
+
       - name: Wdróż system
         run: |
           kubectl apply -f k8s/postgres/
           kubectl apply -f k8s/backend/
           kubectl set image deployment/backend \
-            backend=ghcr.io/${{ github.repository }}/backend:${{ github.sha }}
+            backend=ghcr.io/${{ env.REPO_LC }}/backend:${{ github.sha }}
       - name: Poczekaj na gotowość Podów
         run: |
           kubectl rollout status deployment/postgres --timeout=120s
