@@ -1,0 +1,2 @@
+curl.exe -X POST http://localhost:8080/tasks -H "Content-Type: application/json" -d "{\"title\":\"Zadanie2\"}"
+Invoke-RestMethod -Uri http://localhost:8080/tasks -Method POST -Body '{"title":"Zadanie2"}' -ContentType "application/json"
